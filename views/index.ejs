@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Books Management</title>
+</head>
+<body>
+    <table class= "table table-sortable">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Author</th>
+            <th>Published date</th>
+            <th>Category</th>
+            <th>Vote</th>
+        </tr>       
+    </thead>
+    <tbody>
+
+        <tr>
+            <th>Once Second Before Time</th>
+            <th>Ron Howard</th>
+            <th>2/10/2000</th>
+            <th>Romance</th>
+            <th>10</th>
+        </tr>  
+        <tr>
+            <th>A Cold Blooded Murder</th>
+            <th>Linus Gash</th>
+            <th>5/9/2015</th>
+            <th>Mystery</th>
+            <th>3</th>
+        </tr>  
+        <tr>
+            <th>Little Man</th>
+            <th>Big Boi</th>
+            <th>7/1/1998</th>
+            <th>Comedy</th>
+            <th>6</th>
+        </tr>  
+        <% if (books.length > 0) { %>
+            <% books.array.forEach(book => {
+                
+            });
+         
+
+        <% } %>
+    </tbody>
+    
+
+
+        
+    </table>
+    <form action="/create">
+        <label for="title">Name</label>
+        <input type="text" id="title" placeholder="Name">
+        <input type="text" id="" placeholder="Author">
+        <input type="date" id="title" placeholder="Published date">
+        <input type="text" id="title" placeholder="Category">
+        <input type="number" id="title" placeholder="Vote">
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>
