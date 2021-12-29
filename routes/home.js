@@ -5,8 +5,7 @@ const createNewBook = require('../controllers/createNewBook')
 
 router.get('/', homeView)
 
-router.post('/create', createNewBook )
-
+ 
 
 
 module.exports = router

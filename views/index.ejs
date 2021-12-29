@@ -41,25 +41,25 @@
             <th>6</th>
         </tr>  
         <% if (books.length > 0) { %>
-            <% books.array.forEach(book => {
-                
-            });
-         
-
-        <% } %>
+            <% books.forEach(book => { %>
+                <tr>
+                    <th class="title"> <%= book.title %></th>
+                    <th class="author"> <%= book.author %></th>
+                    <th class="date"> <%= book.date %></th>
+                    <th class="category"> <%= book.category %></th>
+                    <th class="vote"> <%= book.vote %></th>
+                </tr>
+            <% }) %>
+        <% } %> 
     </tbody>
-    
-
-
         
     </table>
     <form action="/create">
-        <label for="title">Name</label>
         <input type="text" id="title" placeholder="Name">
-        <input type="text" id="" placeholder="Author">
-        <input type="date" id="title" placeholder="Published date">
-        <input type="text" id="title" placeholder="Category">
-        <input type="number" id="title" placeholder="Vote">
+        <input type="text" id="author" placeholder="Author">
+        <input type="date" id="date" placeholder="Published date">
+        <input type="text" id="category" placeholder="Category">
+        <input type="number" min='0' max='10' id="vote" placeholder="Vote">
         <button type="submit">Submit</button>
     </form>
 </body>

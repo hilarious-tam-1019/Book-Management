@@ -17,10 +17,10 @@ app.set('view engine','ejs')
 
 
 
-//server setup
-client.on('connected', function() {
-    console.log('redis connected')
-})
+// //server setup
+// client.on('connected', function() {
+//     console.log('redis connected')
+// })
 app.listen(3000, () => {
     console.log('server connected')
 })
