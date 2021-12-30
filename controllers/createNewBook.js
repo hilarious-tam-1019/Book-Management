@@ -1,10 +1,9 @@
-const Redis = require('redis')
+const Redis = require('redis');
+const { post } = require('../routes/home');
+const client = Redis.createClient(6379)
 
-const redisClient = Redis.createClient()
+//log error to the console if any occurs
+client.on("error", (err) => {
+    console.log(err);
+})
 
-
-const createNewBook = (req,res) => {
-    const book = req.body
-    redisClient.set('book', book)
-    
-}
