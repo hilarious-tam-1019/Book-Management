@@ -4,9 +4,16 @@ const routes = require('./routes/home')
 const { urlencoded } = require('body-parser')
 const redis = require('redis')
 const { Result } = require('express-validator')
-const client = redis.createClient()
 
 
+
+
+//connecting to redis
+const client = redis.createClient(6379, '127.0.0.1')
+
+client.on('connect', function() {
+    console.log('Connected!')
+})
 
 //express app
 const app = express()
@@ -17,18 +24,20 @@ app.set('view engine','ejs')
 
 
 
-// //server setup
-// client.on('connected', function() {
-//     console.log('redis connected')
-// })
+//server setup
+
 app.listen(3000, () => {
     console.log('server connected')
 })
 
+
+
+
 //parsing data & static files
 app.use(express.json())
-app.use(urlencoded({extended: true}))
+app.use(express.urlencoded({extended:true}))
 app.use(express.static('views'))
+
 
 
 //routes

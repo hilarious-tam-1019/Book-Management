@@ -10,6 +10,7 @@
     <table class= "table table-sortable">
     <thead>
         <tr>
+            <th>Number</th>
             <th>Name</th>
             <th>Author</th>
             <th>Published date</th>
@@ -19,26 +20,7 @@
     </thead>
     <tbody>
 
-        <tr>
-            <th>Once Second Before Time</th>
-            <th>Ron Howard</th>
-            <th>2/10/2000</th>
-            <th>Romance</th>
-            <th>10</th>
-        </tr>  
-        <tr>
-            <th>A Cold Blooded Murder</th>
-            <th>Linus Gash</th>
-            <th>5/9/2015</th>
-            <th>Mystery</th>
-            <th>3</th>
-        </tr>  
-        <tr>
-            <th>Little Man</th>
-            <th>Big Boi</th>
-            <th>7/1/1998</th>
-            <th>Comedy</th>
-            <th>6</th>
+        
         </tr>  
         <% if (books.length > 0) { %>
             <% books.forEach(book => { %>
@@ -54,13 +36,6 @@
     </tbody>
         
     </table>
-    <form action= "/create-book" id="create-book">
-        <input type="text" id="title" placeholder="Name">
-        <input type="text" id="author" placeholder="Author">
-        <input type="date" id="date" placeholder="Published date">
-        <input type="text" id="category" placeholder="Category">
-        <input type="number" min='0' max='10' id="vote" placeholder="Vote">
-        <button type="submit">Submit</button>
-    </form>
+    
 </body>
 </html>
