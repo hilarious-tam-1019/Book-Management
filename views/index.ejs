@@ -1,41 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books Management</title>
-</head>
-<body>
-    <table class= "table table-sortable">
-    <thead>
-        <tr>
-            <th>Number</th>
-            <th>Name</th>
-            <th>Author</th>
-            <th>Published date</th>
-            <th>Category</th>
-            <th>Vote</th>
-        </tr>       
-    </thead>
-    <tbody>
+<%- include('./partials/header.ejs')  %> 
 
-        
-        </tr>  
-        <% if (books.length > 0) { %>
-            <% books.forEach(book => { %>
-                <tr>
-                    <th class="title"> <%= book.title %></th>
-                    <th class="author"> <%= book.author %></th>
-                    <th class="date"> <%= book.date %></th>
-                    <th class="category"> <%= book.category %></th>
-                    <th class="vote"> <%= book.vote %></th>
-                </tr>
-            <% }) %>
-        <% } %> 
-    </tbody>
-        
-    </table>
+<body>
+
+<div id="users">
+<%- include('./partials/navbar.ejs')  %> 
+    <table class= "table" border="1">
+        <thead>
+            <tr>                
+                <th class= "sort" data-sort="title">Name</th>
+                <th class= "sort" data-sort="author">Author</th>
+                <th class= "sort" data-sort="date">Published year</th>
+                <th class= "sort" data-sort="category">Category</th>
+                <th class= "sort" data-sort="vote">Vote</th>
+            </tr>       
+        </thead>
+        <tbody class ="list">
+            <% if (books.length > 0) { %>
+                <% books.forEach(book => { %>
+                    <tr>
+                        <td class="title"> <%= book.title %></td>
+                        <td class="author"> <%= book.author %></td>
+                        <td class="date"> <%= book.date %></td>
+                        <td class="category"> <%= book.category %></td>
+                        <td class="vote"> <%= book.vote %></td>
+                    </tr>
+                <% }) %>
+            <% } %> 
+        </tbody>
+            
+        </table>
+    
+
+</div>
     
 </body>
-</html>
+
+<!-- Scripting for html -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+<script>
+      var options = {
+        valueNames: [ 'title', 'author', 'date', 'category', 'vote' ]
+    };
+     var contactList = new List('users', options); 
+</script>
+</html>    

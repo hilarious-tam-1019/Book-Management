@@ -1,17 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create</title>
-</head>
+<%- include('./partials/header.ejs')  %> 
 <body>
+    <%- include('./partials/navbar.ejs')  %> 
+
+    <br></br>
+    
     <form action= "/create" id="create-book" method="POST">
         <input type="text" id="title" placeholder="Name" name="title">
         <input type="text" id="author" placeholder="Author" name="author">
-        <input type="date" id="date" placeholder="Published date" name="date">
-        <input type="text" id="category" placeholder="Category" name="category">
+        <input type="number" min='0' max='2021' id="date" placeholder="Year" name="date">
+        <select id="category" name="category" placeholder="Category">
+            <option value="Romance">Romance</option>
+            <option value="Horror">Horror</option>
+            <option value="Comedy">Comedy</option>
+            <option value="Mystery">Mystery</option>
+            <option value="Action">Action</option>
+            <option value="Drama">Drama</option>
+          </select>
         <input type="number" min='0' max='10' id="vote" placeholder="Vote" name="vote">
         <button type="submit">Submit</button>
     </form>
