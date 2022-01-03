@@ -22,6 +22,37 @@ exports.createNewBook = function (req,res) {
         console.log(err)
     })
 }
+//getting book id 
+// exports.gettingBookId = function (req,res) {
+//     const id = req.params.id
+
+
+// }
+//update existing book in database
+exports.updateBook = function (req,res) {
+    const id = req.params.id
+    const book = new bookSchema(req.body)
+    bookSchema.findByIdAndUpdate(id, {title: book.title, author: book.author, date: book.date, category:book.category, vote: book.vote})
+    .then ((result) => {
+        res.redirect('/')
+    })
+    .catch((err)=> {
+        res.redirect(err)
+    })
+}
+
+//delete existing book in database 
+exports.deleteBook = function (req,res) {
+    const id = req.params.id
+
+    bookSchema.findByIdAndDelete(id)
+    .then((result) => {
+        res.redirect('/')
+    })
+    .catch ((err) => {
+        console.log(err)
+    })
+}
 
 
 

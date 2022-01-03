@@ -3,9 +3,10 @@
     <%- include('./partials/navbar.ejs')  %> 
 
     <br>
-    <h1>Creating Books</h1>
+    <h1>Updating Books</h1>
     
-    <form action= "/create" id="create-book" method="POST">
+    
+    <form action= "/update/<%= id  %>  " id="update-book" method="POST">
         <input type="text" id="title" placeholder="Name" name="title">
         <input type="text" id="author" placeholder="Author" name="author">
         <input type="number" min='0' max='2021' id="date" placeholder="Year" name="date">
