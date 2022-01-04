@@ -1,12 +1,16 @@
 const express = require('express')
+const { userLogin } = require('../controllers/authentication')
 const router = express.Router()
 const books = require('../controllers/books')
+const authentication = require('../controllers/authentication')
+const middlewares = require('../middlewares/middlewares')
 
-//getting index view
-router.get('/', books.homeView)
+
+//getting index views
+router.get('/',middlewares.redirectLogin, books.homeView)
 
 //create books
-router.get('/create', (req,res) => {
+router.get('/create',middlewares.redirectLogin, (req,res) => {
      res.render('create', {title: 'Create Books'})
 })
 router.post('/create', books.createNewBook)
@@ -20,5 +24,22 @@ router.post('/update/:id', books.updateBook)
 
 //deleting books
 router.post('/delete/:id', books.deleteBook)
+
+
+//user login
+router.get('/login',middlewares.redirectHome, (req,res) => {
+     res.render('login', {title:'Log In'})
+})
+router.post('/login', authentication.userLogin)
+
+//user sign in 
+router.get('/signup',middlewares.redirectHome, (req,res) => {
+     res.render('signup', {title: 'Sign Up'})
+})
+router.post('/signup', authentication.userSignup)
+
+//user log out
+router.post('/logout', authentication.userLogout)
+
 
 module.exports = router

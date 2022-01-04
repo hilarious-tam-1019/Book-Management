@@ -1,0 +1,17 @@
+//redirect to login if the user not log in
+exports.redirectLogin = (req,res,next) => {
+    if (!req.session.userId) {
+        res.redirect('/login')
+    } else {
+        next()
+    }
+}
+
+//redirect to home if the user has already log in
+exports.redirectHome = (req,res,next) => {
+    if (req.session.userId) {
+        res.redirect('/')
+    } else {
+        next()
+    }
+}

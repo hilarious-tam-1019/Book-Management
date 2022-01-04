@@ -1,7 +1,7 @@
 <%- include('./partials/header.ejs')  %> 
 
 <body>
-
+    
 <div id="users">
 <%- include('./partials/navbar.ejs')  %> 
     <table class= "table" border="1">
@@ -31,8 +31,9 @@
         </tbody>
             
         </table>
-    
-
+        <form method = 'post' action='/logout'>
+        <button class = "button1" >Log Out</button>
+        
 </div>
     
 </body>

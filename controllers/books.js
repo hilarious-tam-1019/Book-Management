@@ -1,4 +1,6 @@
 const bookSchema = require('../model/bookSchema')
+const Redis = require('redis')
+
 
 //render database
 exports.homeView = (req,res) => {
@@ -22,12 +24,7 @@ exports.createNewBook = function (req,res) {
         console.log(err)
     })
 }
-//getting book id 
-// exports.gettingBookId = function (req,res) {
-//     const id = req.params.id
 
-
-// }
 //update existing book in database
 exports.updateBook = function (req,res) {
     const id = req.params.id
