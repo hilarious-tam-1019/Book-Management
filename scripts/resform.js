@@ -22,7 +22,7 @@ const form = document.getElementById('reg-form');
             if (result.status ==='ok') {
                 //everthing went fine 
                 alert('Success')
-                window.location.href = '/'
+                window.location.href = '/login'
             } else {
                 alert(result.error);
             }

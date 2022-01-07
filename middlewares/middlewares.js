@@ -15,3 +15,4 @@ exports.redirectHome = (req,res,next) => {
         next()
     }
 }
+

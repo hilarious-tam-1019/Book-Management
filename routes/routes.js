@@ -4,7 +4,7 @@ const router = express.Router()
 const books = require('../controllers/books')
 const authentication = require('../controllers/authentication')
 const middlewares = require('../middlewares/middlewares')
-
+const accessControl = require('../controllers/accessControl')
 
 //getting index views
 router.get('/',middlewares.redirectLogin, books.homeView)
@@ -23,8 +23,7 @@ router.get('/update/:id',(req,res) => {
 router.post('/update/:id', books.updateBook)
 
 //deleting books
-router.post('/delete/:id', books.deleteBook)
-
+router.post('/delete/:id',accessControl.grantAccess('deleteAny','book'), books.deleteBook)
 
 //user login
 router.get('/login',middlewares.redirectHome, (req,res) => {
@@ -33,13 +32,17 @@ router.get('/login',middlewares.redirectHome, (req,res) => {
 router.post('/login', authentication.userLogin)
 
 //user sign in 
-router.get('/signup',middlewares.redirectHome, (req,res) => {
+router.get('/signup', (req,res) => {
      res.render('signup', {title: 'Sign Up'})
 })
 router.post('/signup', authentication.userSignup)
 
 //user log out
 router.post('/logout', authentication.userLogout)
+
+//email confirmation
+// router.get('/confirmation/:session', )
+
 
 
 module.exports = router

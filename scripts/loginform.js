@@ -15,13 +15,21 @@ const form = document.getElementById('login-form');
 				email,
 				password,
 			}),
-		}) 
-        const data = await response.json()
-        if (data.user) {
-                alert('Login successful')
-                window.location.href = '/'
-            } else {
-                alert('Please check your username and password')
-            }
+		})
+		const data = await response.json()
+		if (data.status ==='ok') {
+			//everthing went fine 
+			alert('Login successful')
+			window.location.href = '/'
+		} else {
+			alert(data.error);
+		}
+        // const data = await response.json()
+        // if (data.user) {
+        //         alert('Login successful')
+        //         window.location.href = '/'
+        //     } else {
+        //         alert('Please check your username and password')
+        //     }
         }
     

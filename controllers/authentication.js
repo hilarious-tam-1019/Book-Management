@@ -1,8 +1,6 @@
 const userSchema = require('../model/userSchema')
 const bcrypt = require('bcryptjs')
-const session = require('express-session');
-const MongoDBStore = require('connect-mongodb-session')(session);
-
+const nodemailer = require('nodemailer')
 
 
 
@@ -19,6 +17,7 @@ exports.userLogin = async (req,res) => {
     if(await bcrypt.compare(password, user.password)) {
         // email, password combination is succesful
         req.session.userId = user._id
+        req.session.role = user.role
         return res.json ({status:'ok', user: req.session.userId})
     }
     res.json({ status: 'error', error: 'Invalid username/password' })
@@ -49,8 +48,11 @@ exports.userSignup = async (req,res) => {
         },
     )
         req.session.userId = response._id
+        req.session.role = response.role
 
         console.log ('User created succesfully: ', response);
+
+
     } catch (error) {
         if(error.name==='ValidationError') {
             return res.json({ status:'error', error: 'Invalid Email'})
@@ -64,6 +66,7 @@ exports.userSignup = async (req,res) => {
     }
     res.json({status: 'ok'})
 }
+
 
 //user log out
 exports.userLogout = (req, res) => {

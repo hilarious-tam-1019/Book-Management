@@ -1,5 +1,5 @@
+const { AccessControl } = require('accesscontrol')
 const bookSchema = require('../model/bookSchema')
-const Redis = require('redis')
 
 
 //render database
@@ -41,7 +41,6 @@ exports.updateBook = function (req,res) {
 //delete existing book in database 
 exports.deleteBook = function (req,res) {
     const id = req.params.id
-
     bookSchema.findByIdAndDelete(id)
     .then((result) => {
         res.redirect('/')
@@ -50,6 +49,7 @@ exports.deleteBook = function (req,res) {
         console.log(err)
     })
 }
+
 
 
 
