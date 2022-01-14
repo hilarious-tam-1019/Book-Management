@@ -1,6 +1,4 @@
-const { AccessControl } = require('accesscontrol')
 const bookSchema = require('../model/bookSchema')
-
 
 //render database
 exports.homeView = (req,res) => {
@@ -52,10 +50,15 @@ exports.deleteBook = function (req,res) {
 
 // search existing book in database
 exports.searchBook = function (req,res) {
-    let queryString = req.query.category.toLowerCase()
-    const re = /(\b[a-z](?!\s))/g
-    queryString = queryString.replace(re, function(x){return x.toUpperCase()})
-    bookSchema.find({category: queryString})
+    console.log(req.query)
+    bookSchema.find({
+        $or: [
+        { title: req.query.title},
+        { author: req.query.author},
+        { category: req.query.category},
+        { vote: req.query.vote}
+        ]
+    })
     .then((result)=> {
         console.log(result)
         res.render('index', {title: 'Home', books: result})
