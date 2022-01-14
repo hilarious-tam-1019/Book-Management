@@ -7,8 +7,8 @@ ac.grant("user")
  .updateOwn("book")
  
 ac.grant("admin")
- .extend("user")
  .readAny("book")
+ .updateAny("book")
  .deleteAny("book")
 
 return ac; 

@@ -10,7 +10,6 @@ exports.grantAccess = function(action, resource) {
      error: "You don't have enough permission to perform this action"
     });
    }
-   res.re
    next()
   } catch (error) {
    next(error)

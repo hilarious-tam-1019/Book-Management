@@ -10,7 +10,15 @@ exports.homeView = (req,res) => {
         console.log(err)
     })
 }
-
+exports.homeViewOfUsers = (req,res) => {
+    bookSchema.find({category: 'Drama'})
+    .then((result) => {
+        res.render('index', {title: 'Home' ,books: result})
+    })
+    .catch((err)=> {
+        console.log(err)
+    })
+}
 //create new book in database
 exports.createNewBook = function (req,res) {
     const book = new bookSchema(req.body)

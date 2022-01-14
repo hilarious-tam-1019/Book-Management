@@ -1,6 +1,5 @@
 const userSchema = require('../model/userSchema')
 const bcrypt = require('bcryptjs')
-const nodemailer = require('nodemailer')
 
 
 
@@ -70,6 +69,9 @@ exports.userSignup = async (req,res) => {
 
 //user log out
 exports.userLogout = (req, res) => {
+    res.status(200).clearCookie('connect.sid', {
+        path: '/'
+      });
     req.session.destroy(err =>{
         if(err) {
             return res.redirect('/')
