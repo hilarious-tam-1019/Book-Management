@@ -24,7 +24,7 @@
                         <td class="category"> <%= book.category %></td>
                         <td class="vote"> <%= book.vote %></td>
                         <form method = 'get' action='/update/<%= book._id  %>'><td class="edit" ><button class="edit-item-btn">Edit</button></td></form>
-                        <form method = 'post' action='/delete/<%= book._id  %>'><td class="remove"><button class="remove-item-btn">Remove</button></td></form>
+                        <form method = 'post' id= 'delete-form' action='/delete/<%= book._id  %>'><td class="remove"><button class="remove-item-btn">Remove</button></td></form>
                     </tr>
                 <% }) %>
             <% } %> 

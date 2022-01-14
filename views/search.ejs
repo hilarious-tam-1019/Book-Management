@@ -1,0 +1,9 @@
+<%- include('./partials/header.ejs')  %> 
+<body>
+<%- include('./partials/navbar.ejs')  %> 
+
+<form action="/search" id="search-book" method="POST">
+    <div class="search-form__header">Search for your book</div>
+    <input class="search" name="name" type="text" placeholder="Search" >
+    <button class="search__button" type="submit">Search</button>
+</form>

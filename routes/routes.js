@@ -25,6 +25,9 @@ router.post('/update/:id', books.updateBook)
 //deleting books
 router.post('/delete/:id',accessControl.grantAccess('deleteAny','book'), books.deleteBook)
 
+//book search
+router.get('/search',middlewares.redirectLogin, books.searchBook)
+
 //user login
 router.get('/login',middlewares.redirectHome, (req,res) => {
      res.render('login', {title:'Log In'})
@@ -39,6 +42,9 @@ router.post('/signup', authentication.userSignup)
 
 //user log out
 router.post('/logout', authentication.userLogout)
+
+
+
 
 //email confirmation
 // router.get('/confirmation/:session', )

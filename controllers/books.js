@@ -50,7 +50,21 @@ exports.deleteBook = function (req,res) {
     })
 }
 
-
+// search existing book in database
+exports.searchBook = function (req,res) {
+    let queryString = req.query.category.toLowerCase()
+    const re = /(\b[a-z](?!\s))/g
+    queryString = queryString.replace(re, function(x){return x.toUpperCase()})
+    bookSchema.find({category: queryString})
+    .then((result)=> {
+        console.log(result)
+        res.render('index', {title: 'Home', books: result})
+    })
+    .catch((err)=>{
+        res.redirect(err)
+    })
+}
+    
 
 
 
