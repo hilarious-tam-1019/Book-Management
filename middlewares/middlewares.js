@@ -10,9 +10,11 @@ exports.redirectLogin = (req,res,next) => {
 //redirect to home if the user has already log in
 exports.redirectHome = (req,res,next) => {
     if (req.session.userId) {
-        res.redirect('/')
+        res.redirect('/home')
     } else {
         next()
     }
 }
+
+
 

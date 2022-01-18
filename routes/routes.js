@@ -6,8 +6,14 @@ const authentication = require('../controllers/authentication')
 const middlewares = require('../middlewares/middlewares')
 const accessControl = require('../controllers/accessControl')
 
-//getting index views
-router.get('/', middlewares.redirectLogin, books.homeView)
+//local host route
+router.get('/', middlewares.redirectLogin, middlewares.redirectHome)
+
+//getting index view
+router.get('/home', middlewares.redirectLogin,accessControl.grantAccess("readAny","book"), books.homeView)
+
+//getting user view
+router.get('/home/user', middlewares.redirectLogin, accessControl.grantAccess("readOwn","book"), books.homeViewOfUsers)
 
 //create books
 router.get('/create',middlewares.redirectLogin, (req,res) => {
@@ -43,7 +49,7 @@ router.post('/signup', authentication.userSignup)
 //user log out
 router.post('/logout', authentication.userLogout)
 
-
+//user page
 
 
 //email confirmation

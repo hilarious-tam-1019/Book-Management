@@ -1,0 +1,49 @@
+<%- include('./partials/header.ejs')  %> 
+
+<body>
+    
+<div id="users">
+<%- include('./partials/navbar.ejs')  %> 
+    <table class= "table" border="1">
+        <thead>
+            <tr>                
+                <th class= "sort" data-sort="title">Name</th>
+                <th class= "sort" data-sort="author">Author</th>
+                <th class= "sort" data-sort="date">Published year</th>
+                <th class= "sort" data-sort="category">Category</th>
+                <th class= "sort" data-sort="vote">Vote</th>
+            </tr>       
+        </thead>
+        <tbody class ="list">
+            <% if (books.length > 0) { %>
+                <% books.forEach(book => { %>
+                    <tr>
+                        <td class="title"> <%= book.title %></td>
+                        <td class="author"> <%= book.author %></td>
+                        <td class="date"> <%= book.date %></td>
+                        <td class="category"> <%= book.category %></td>
+                        <td class="vote"> <%= book.vote %></td>
+                        <form method = 'get' action='/update/<%= book._id  %>'><td class="edit" ><button class="edit-item-btn">Edit</button></td></form>
+                        <form method = 'post' id= 'delete-form' action='/delete/<%= book._id  %>'><td class="remove"><button class="remove-item-btn">Remove</button></td></form>
+                    </tr>
+                <% }) %>
+            <% } %> 
+        </tbody>
+            
+        </table>
+        <form method = 'post' action='/logout'>
+        <button class = "button1" >Log Out</button>
+        
+</div>
+    
+</body>
+
+<!-- Scripting for html -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/list.js/1.5.0/list.min.js"></script>
+<script>
+      var options = {
+        valueNames: [ 'title', 'author', 'date', 'category', 'vote' ]
+    };
+     var contactList = new List('users', options); 
+</script>
+</html>    
