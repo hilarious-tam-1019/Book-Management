@@ -10,6 +10,7 @@ ac.grant("admin")
  .readAny("book")
  .updateAny("book")
  .deleteAny("book")
+ .createAny("book")
 
 return ac; 
 })();

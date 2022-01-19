@@ -1,3 +1,5 @@
+const { roles }  = require('../controllers/roles')
+
 //redirect to login if the user not log in
 exports.redirectLogin = (req,res,next) => {
     if (!req.session.userId) {
@@ -16,5 +18,20 @@ exports.redirectHome = (req,res,next) => {
     }
 }
 
+//checking if the account is authorized for the request
+exports.roleAuth = function(action, resource) {
+ return async (req, res, next) => {
+  try {
+   const permission = roles.can(req.session.role)[action](resource);
+   if (!permission.granted) {
+    console.log("The account is unauthorized for this request")
+    return res.redirect(403, '/home')
+   }
+   next()
+  } catch (error) {
+   next(error)
+  }
+ }
+}
 
 
