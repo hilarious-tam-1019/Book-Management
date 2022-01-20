@@ -1,4 +1,4 @@
-const { roles }  = require('../controllers/roles')
+const { roles }  = require('./roles')
 
 //redirect to login if the user not log in
 exports.redirectLogin = (req,res,next) => {

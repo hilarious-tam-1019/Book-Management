@@ -1,4 +1,7 @@
 const bookSchema = require('../model/bookSchema')
+const dataValidation = require('../model/dataValidation')
+const jjv = require('jjv')
+const env = jjv()
 
 //render database
 exports.homeView = (req,res) => {
@@ -24,14 +27,22 @@ exports.homeView = (req,res) => {
 
 //create new book in database
 exports.createNewBook = function (req,res) {
-    const book = new bookSchema(req.body)
-    book.save()
-    .then ((result) => {
+    env.addSchema('book', dataValidation)
+    const errors = env.validate('book', req.body)
+    console.log(errors)
+    if(!errors)
+    {
+        const book = new bookSchema(req.body)
+        book.save()
+        .then ((result) => {
         res.redirect('/')
     })
-    .catch ((err) => {
-        console.log(err)
-    })
+        .catch ((err) => {
+            console.log(err)
+    })}
+    else {
+        res.status(400).send('Bad Request')
+    }
 }
 
 //update existing book in database
