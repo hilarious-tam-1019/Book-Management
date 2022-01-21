@@ -29,19 +29,19 @@ exports.homeView = (req,res) => {
 exports.createNewBook = function (req,res) {
     env.addSchema('book', dataValidation)
     const errors = env.validate('book', req.body)
-    console.log(errors)
     if(!errors)
-    {
+    {   
         const book = new bookSchema(req.body)
+
         book.save()
         .then ((result) => {
         res.redirect('/')
     })
         .catch ((err) => {
             console.log(err)
-    })}
+    })} 
     else {
-        res.status(400).send('Bad Request')
+        res.status(400).send('Failed with error object ' + JSON.stringify(errors))
     }
 }
 

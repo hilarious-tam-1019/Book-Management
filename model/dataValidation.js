@@ -12,17 +12,17 @@ const model = {
             maxLength: 15
         },
         date: {
-            type: 'number',
+            type: 'string',
+            format: 'numeric'
             
-
         },
         category: {
             type: 'string',
             enum: ['Romance','Horror','Comedy','Mystery','Action','Drama']
         },
         vote: {
-            type: 'number',
-            
+            type: 'string',
+            format: 'numeric'
         }
     },
     required: ['title', 'author', 'date', 'category','vote']
