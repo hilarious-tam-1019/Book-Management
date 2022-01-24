@@ -13,7 +13,9 @@ const model = {
         },
         date: {
             type: 'string',
-            format: 'numeric'
+            format: 'numeric',
+            minimum: '0',
+            maximum: '2021'
             
         },
         category: {
@@ -22,7 +24,9 @@ const model = {
         },
         vote: {
             type: 'string',
-            format: 'numeric'
+            format: 'numeric',
+            minimum: '0',
+            maximum: '10'
         }
     },
     required: ['title', 'author', 'date', 'category','vote']
