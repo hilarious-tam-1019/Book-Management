@@ -11,15 +11,29 @@ var books_cache_admin, books_cache_user
 exports.homeView = (req,res) => {
     if(req.session.role == 'admin')
     {   
-        let booksCacheAdmin
+        let booksCached
         const getBookCacheAdmin = async () => {
             const client = redis.createClient(6379)
             await client.connect()
-            booksCacheAdmin = await client.json.get(books_cache_admin)
+            booksCached = await client.get(books_cache_admin)
             await client.quit()
         }
-        if(booksCacheAdmin) {
-
+        getBookCacheAdmin()
+        if(booksCached) {
+            res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
+        }
+        else {
+            bookSchema.find()
+            .then(async(result)=> {
+                const client = redis.createClient(6379)
+                await client.connect()
+                await client.set(books_cache_admin, '$', JSON.stringify(result))
+                await client.quit()
+                res.render('index', {title:'Home', books: result})
+            })
+            .catch((err)=> {
+                console.log(err)
+            })
         }
         
     }
