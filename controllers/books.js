@@ -2,21 +2,39 @@ const bookSchema = require('../model/bookSchema')
 const dataValidation = require('../model/dataValidation')
 const jjv = require('jjv')
 const env = jjv()
+const redis = require('redis')
+
+var books_cache_admin, books_cache_user
+
 
 //render database
 exports.homeView = (req,res) => {
     if(req.session.role == 'admin')
-    {
-        bookSchema.find()
-    .then((result) => {
-        res.render('index', {title: 'Home' ,books: result})
-    })
-    .catch((err)=> {
-        console.log(err)
-    }) }
+    {   
+        let booksCacheAdmin
+        const getBookCacheAdmin = async () => {
+            const client = redis.createClient(6379)
+            await client.connect()
+            booksCacheAdmin = await client.json.get(books_cache_admin)
+            await client.quit()
+        }
+        if(booksCacheAdmin) {
+
+        }
+        
+    }
+    // bookSchema.find()
+    //                 .then((result) => {
+    //                     client.json.set(books_cache_admin, 1000 * 60 * 60 * 2, result)
+    //                     res.render('index', {title: 'Home' ,books: result})
+    //                 })
+    //                 .catch((err)=> {
+    //                     console.log(err)
+    //                 }) 
+
     else if (req.session.role=='user') 
     {
-        bookSchema.find({category: 'Drama'})
+    bookSchema.find({category: 'Drama'})
     .then((result) => {
         res.render('index', {title: 'Home' ,books: result})
     })
