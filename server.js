@@ -12,6 +12,9 @@ const port = 3000
 //express app
 const app = express()
 
+//set server starting variable
+const server = app.listen(port,() => {console.log('server connected to port '+ port)})
+
 //register view engine
 app.set('view engine','ejs')
 
@@ -53,8 +56,12 @@ app.use(routes)
 //connecting to mongodb
 const dbURI = 'mongodb+srv://TamNguyen:funnytam1999@cluster0.cmadf.mongodb.net/Book-Management?retryWrites=true&w=majority'
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-.then((result) => app.listen(port,() => {console.log('server connected to port '+ port)}))
+.then((result) => server)
 .catch((err)=> console.log(err))
+
+module.exports = server
+
+
 
 
 
