@@ -3,7 +3,7 @@ const dataValidation = require('../model/dataValidation')
 const jjv = require('jjv')
 const env = jjv()
 const redis = require('redis')
-
+const timeExpire = 60 * 60 * 24
 
 //render database
 exports.homeView = (req,res) => {
@@ -26,6 +26,7 @@ exports.homeView = (req,res) => {
                 const client = redis.createClient(6379)
                 await client.connect()
                 await client.set('books_cache_admin', JSON.stringify(result))
+                await client.expire('books_cache_admin', timeExpire)
                 await client.quit()
                 res.render('index', {title:'Home', books: result})
             })
@@ -53,7 +54,8 @@ exports.homeView = (req,res) => {
             .then(async(result)=> {
                 const client = redis.createClient(6379)
                 await client.connect()
-                await client.set('books_cache_user', JSON.stringify(result))
+                await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
+                await client.expire('books_cache_user', timeExpire)
                 await client.quit()
                 res.render('index', {title:'Home', books: result})
             })
@@ -61,7 +63,8 @@ exports.homeView = (req,res) => {
                 console.log(err)
             })
         }
-}}
+    }
+}
 
 //create new book in database
 exports.createNewBook = function (req,res) {
@@ -148,6 +151,4 @@ exports.searchBook = function (req,res) {
     }
 }
     
-
-
 
