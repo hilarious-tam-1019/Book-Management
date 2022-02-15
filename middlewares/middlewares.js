@@ -2,8 +2,10 @@ const { roles }  = require('./roles')
 
 //redirect to login if the user not log in
 exports.redirectLogin = (req,res,next) => {
+    console.log('redirectLogin')
     if (!req.session.userId) {
         res.redirect('/login')
+
     } else {
         next()
     }

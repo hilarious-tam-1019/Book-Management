@@ -7,6 +7,7 @@ const timeExpire = 60 * 60 * 24
 
 //render database
 exports.homeView = (req,res) => {
+    console.log('homeView')
     if(req.session.role == 'admin')
     {   
         let booksCached

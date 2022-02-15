@@ -38,6 +38,7 @@
     "redis": "^4.0.1",
     "redis-json": "^6.0.2",
     "shortid": "^2.2.16",
+    "sinon": "^13.0.1",
     "update": "^0.7.4",
     "validator": "^13.7.0"
   }
