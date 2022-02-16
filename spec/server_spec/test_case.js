@@ -29,8 +29,29 @@ describe("Server ", () => {
         }
         var res = {
           render: function(a, b) {
-            console.log('a',a)
-            console.log('b',b)
+            expect(a).toBe('index')
+            expect(b).toBeDefined
+          } 
+        }
+        books.homeView(req,res)
+        done()
+      } catch(err) {
+        console.log(err)
+      }
+    })     
+  })
+  describe("GET /home", ()=> {
+    it("should render index for user", (done) => {
+      try {
+        var req = {
+          session: {
+            role: "user"
+          }
+        }
+        var res = {
+          render: function(a, b) {
+            expect(a).toBe('index')
+            expect(b).toBeDefined
           } 
         }
         books.homeView(req,res)

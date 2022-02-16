@@ -10,7 +10,6 @@ exports.homeView = (req,res) => {
     // console.log('homeView')
     if(req.session.role == 'admin')
     {   
-        
         const getBookCacheAdmin = async () => {
             const client = redis.createClient(6379)
             await client.connect()
@@ -21,8 +20,6 @@ exports.homeView = (req,res) => {
             else {
                 bookSchema.find()
                 .then(async(result)=> {
-                    const client = redis.createClient(6379)
-                    await client.connect()
                     await client.set('books_cache_admin', JSON.stringify(result))
                     await client.expire('books_cache_admin', timeExpire)
                     res.render('index', {title:'Home', books: result})
@@ -35,7 +32,6 @@ exports.homeView = (req,res) => {
         }
         getBookCacheAdmin()
     }
-
     else if (req.session.role=='user') 
     {
         const getBookCacheUser = async () => {
@@ -48,11 +44,8 @@ exports.homeView = (req,res) => {
         else {
             bookSchema.find({category: 'Drama'})
             .then(async(result)=> {
-                const client = redis.createClient(6379)
-                await client.connect()
-                await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
+                await client.set('books_cache_user', JSON.stringify(result))
                 await client.expire('books_cache_user', timeExpire)
-                await client.quit()
                 res.render('index', {title:'Home', books: result})
             })
             .catch((err)=> {
@@ -150,4 +143,3 @@ exports.searchBook = function (req,res) {
     }
 }
     
-
