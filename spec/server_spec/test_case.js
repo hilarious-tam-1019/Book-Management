@@ -8,13 +8,11 @@ const middlewares = require('../../middlewares/middlewares');
 describe("Server ", () => {
   var server
   let sessionStub
-  let mockHomeView
   beforeAll(()=> {
     sessionStub = sinon.stub(middlewares, 'redirectLogin').callsFake(function(req, res, next) {
       console.log('sessionStub');
       next();
     })
-    getBookCacheAdminStub = sinon.stub(books.homeView,'')
     server = require('../../server')
   })
   afterAll(() => { 
@@ -23,11 +21,8 @@ describe("Server ", () => {
   })
 
   describe("GET /home", ()=> {
-    var data= {}
-    beforeEach(()=> {
-      
-    })
-    it("should rendered", (done) => {
+
+    it("should render index", (done) => {
       try {
         var req = {
           session: {
@@ -36,18 +31,29 @@ describe("Server ", () => {
         }
         var res = {
           render: function(a, b) {
-            
-            console.log('a', a);
-            console.log('b', b);
-            // if(req.session.role == 'admin')
-            // {
-            //   return true
-            // }
+            expect(a).toBe('index')
+            expect(b).toBeDefined
           } 
         }
-
         books.homeView(req,res)
-        console.log(result)
+        done()
+      } catch(err) {
+        console.log(err)
+      }
+    })
+    it("should return index", (done) => {
+      try {
+        var req = {
+          session: {
+            role: "admin"
+          }
+        }
+        var res = {
+          render: function(a, b) {
+            expect(a).toBe('index')
+          } 
+        }
+        books.homeView(req,res)
         done()
       } catch(err) {
         console.log(err)

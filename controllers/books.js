@@ -43,22 +43,22 @@ exports.homeView = (req,res) => {
             await client.connect()
             let booksCached = await client.get('books_cache_user')
             if(booksCached) {
-                res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
-            }
-            else {
-                bookSchema.find({category: 'Drama'})
-                .then(async(result)=> {
-                    const client = redis.createClient(6379)
-                    await client.connect()
-                    await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
-                    await client.expire('books_cache_user', timeExpire)
-                    await client.quit()
-                    res.render('index', {title:'Home', books: result})
-                })
-                .catch((err)=> {
-                    console.log(err)
-                })
-            }
+            res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
+        }
+        else {
+            bookSchema.find({category: 'Drama'})
+            .then(async(result)=> {
+                const client = redis.createClient(6379)
+                await client.connect()
+                await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
+                await client.expire('books_cache_user', timeExpire)
+                await client.quit()
+                res.render('index', {title:'Home', books: result})
+            })
+            .catch((err)=> {
+                console.log(err)
+            })
+        }
             await client.quit()
         }
         getBookCacheUser()
