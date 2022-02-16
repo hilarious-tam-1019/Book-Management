@@ -7,63 +7,61 @@ const timeExpire = 60 * 60 * 24
 
 //render database
 exports.homeView = (req,res) => {
-    console.log('homeView')
+    // console.log('homeView')
     if(req.session.role == 'admin')
     {   
-        let booksCached
+        
         const getBookCacheAdmin = async () => {
             const client = redis.createClient(6379)
             await client.connect()
-            booksCached = await client.get('books_cache_admin')
+            let booksCached = await client.get('books_cache_admin')
+            if(booksCached) {
+                res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
+            }
+            else {
+                bookSchema.find()
+                .then(async(result)=> {
+                    const client = redis.createClient(6379)
+                    await client.connect()
+                    await client.set('books_cache_admin', JSON.stringify(result))
+                    await client.expire('books_cache_admin', timeExpire)
+                    res.render('index', {title:'Home', books: result})
+                })
+                .catch((err)=> {
+                    console.log(err)
+                })
+            }
             await client.quit()
         }
         getBookCacheAdmin()
-        if(booksCached) {
-            res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
-        }
-        else {
-            bookSchema.find()
-            .then(async(result)=> {
-                const client = redis.createClient(6379)
-                await client.connect()
-                await client.set('books_cache_admin', JSON.stringify(result))
-                await client.expire('books_cache_admin', timeExpire)
-                await client.quit()
-                res.render('index', {title:'Home', books: result})
-            })
-            .catch((err)=> {
-                console.log(err)
-            })
-        }
     }
 
     else if (req.session.role=='user') 
     {
-    let booksCached
         const getBookCacheUser = async () => {
             const client = redis.createClient(6379)
             await client.connect()
-            booksCached = await client.get('books_cache_user')
+            let booksCached = await client.get('books_cache_user')
+            if(booksCached) {
+                res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
+            }
+            else {
+                bookSchema.find({category: 'Drama'})
+                .then(async(result)=> {
+                    const client = redis.createClient(6379)
+                    await client.connect()
+                    await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
+                    await client.expire('books_cache_user', timeExpire)
+                    await client.quit()
+                    res.render('index', {title:'Home', books: result})
+                })
+                .catch((err)=> {
+                    console.log(err)
+                })
+            }
             await client.quit()
         }
         getBookCacheUser()
-        if(booksCached) {
-            res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
-        }
-        else {
-            bookSchema.find({category: 'Drama'})
-            .then(async(result)=> {
-                const client = redis.createClient(6379)
-                await client.connect()
-                await client.set('books_cache_user', JSON.stringify(result),'EX', 10)
-                await client.expire('books_cache_user', timeExpire)
-                await client.quit()
-                res.render('index', {title:'Home', books: result})
-            })
-            .catch((err)=> {
-                console.log(err)
-            })
-        }
     }
 }
 

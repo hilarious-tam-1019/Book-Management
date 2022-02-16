@@ -8,12 +8,13 @@ const middlewares = require('../../middlewares/middlewares');
 describe("Server ", () => {
   var server
   let sessionStub
-  let homeViewStub
+  let mockHomeView
   beforeAll(()=> {
     sessionStub = sinon.stub(middlewares, 'redirectLogin').callsFake(function(req, res, next) {
       console.log('sessionStub');
       next();
     })
+    getBookCacheAdminStub = sinon.stub(books.homeView,'')
     server = require('../../server')
   })
   afterAll(() => { 
@@ -23,19 +24,9 @@ describe("Server ", () => {
 
   describe("GET /home", ()=> {
     var data= {}
-    beforeEach(()=> {})
-    // it("should return 200", (done)=> {
-    //   try {
-    //     const data_file = axios.get('http://localhost:3000/home')
-    //     .then((response) => {
-    //       data.status = response.status
-    //       expect(data.status).toBe(200)
-    //       done();
-    //     })
-    //   } catch(err) {
-    //     console.log(err)
-    //   }  
-    // })
+    beforeEach(()=> {
+      
+    })
     it("should rendered", (done) => {
       try {
         var req = {
@@ -44,14 +35,18 @@ describe("Server ", () => {
           }
         }
         var res = {
-          render: function(req) {
-            if(req.session.role == 'admin')
-            {
-              return true
-            }
+          render: function(a, b) {
+            
+            console.log('a', a);
+            console.log('b', b);
+            // if(req.session.role == 'admin')
+            // {
+            //   return true
+            // }
           } 
         }
-        const result = books.homeView(req,res)
+
+        books.homeView(req,res)
         console.log(result)
         done()
       } catch(err) {
