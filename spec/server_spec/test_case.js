@@ -40,7 +40,6 @@ describe("Server ", () => {
       }
     })     
   })
-  describe("GET /home", ()=> {
     it("should render index for user", (done) => {
       try {
         var req = {
@@ -59,10 +58,44 @@ describe("Server ", () => {
       } catch(err) {
         console.log(err)
       }
-    })     
   })
-  
-  
+  it("should return 404 for unidentified role", (done) => {
+    try {
+      var req = {
+        session: {
+          role: "asdasdw"
+        }
+      }
+      var res = {
+        status: function(a) {
+          expect(a).toBe(404)
+        }
+      }
+      let result = books.homeView(req,res)
+      done()
+    } catch(err) {
+      console.log(err)
+    }
+})
+  it("should return 404 for null", (done) => {
+    try {
+      var req = {
+        session: {
+          role: null
+        }
+      }
+      var res = {
+        status: function(a) {
+        expect(a).toBe(404)
+      }
+    }
+      let result = books.homeView(req,res)
+      done()
+  } catch(err) {
+    console.log(err)
+  }
+})
+
 })
 
 

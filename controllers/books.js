@@ -56,6 +56,9 @@ exports.homeView = (req,res) => {
         }
         getBookCacheUser()
     }
+    else {
+        res.status(404)
+    }
 }
 
 //create new book in database
