@@ -20,6 +20,17 @@ describe("Server ", () => {
   })
 
   describe("GET /home", ()=> {
+    it("should return correct route",(done)=> {
+      try {
+        axios.get("http://localhost:3000/home")
+        .then((res)=> {
+          expect(res.status).toBe(200)
+        })
+        done()
+      } catch(err) {
+        console.log(err)
+      }
+    })
     it("should render index for admin", (done) => {
       try {
         var req = {
