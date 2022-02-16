@@ -28,7 +28,7 @@ exports.homeView = (req,res) => {
                     console.log(err)
                 })
             }
-            await client.quit()
+            
         }
         getBookCacheAdmin()
     }
@@ -52,7 +52,7 @@ exports.homeView = (req,res) => {
                 console.log(err)
             })
         }
-            await client.quit()
+            
         }
         getBookCacheUser()
     }
