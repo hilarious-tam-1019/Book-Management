@@ -124,12 +124,12 @@ describe("Route ", () => {
   describe('Get /', ()=> {
     beforeEach((done) => {
       try {
-        var req = {
-          session: {
-            role: 'admin'
-          }
-        }
-        const data_file = axios.get("http://localhost:3000/home", {withCredentials: true})
+        const data_file = axios.get("http://localhost:3000/home", {
+          auth: {
+            email: 'superman1011999@gmail.com',
+            password: 'funnytam1999'
+          },
+        })
         .then((response)=> {
           console.log(response)
           done()
