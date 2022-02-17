@@ -8,7 +8,7 @@ const middlewares = require('../middlewares/middlewares')
 router.get('/', middlewares.redirectLogin, middlewares.redirectHome)
 
 //getting index view
-router.get('/home', middlewares.redirectLogin, books.homeView)
+router.get('/home', middlewares.redirectLogin, books.getBookCacheAdmin,books.getBookCacheUser, books.unidentifiedUser)
 
 //create books
 router.get('/create',middlewares.redirectLogin,middlewares.roleAuth('createAny','book'), (req,res) => {

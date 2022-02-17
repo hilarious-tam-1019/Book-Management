@@ -5,60 +5,56 @@ const env = jjv()
 const redis = require('redis')
 const timeExpire = 60 * 60 * 24
 
-//render database
-exports.homeView = (req,res) => {
-    // console.log('homeView')
+exports.getBookCacheAdmin = async (req,res,next) => {
     if(req.session.role == 'admin')
-    {   
-        const getBookCacheAdmin = async () => {
-            const client = redis.createClient(6379)
-            await client.connect()
-            let booksCached = await client.get('books_cache_admin')
-            if(booksCached) {
-                res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
-            }
-            else {
-                bookSchema.find()
-                .then(async(result)=> {
-                    await client.set('books_cache_admin', JSON.stringify(result))
-                    await client.expire('books_cache_admin', timeExpire)
-                    res.render('index', {title:'Home', books: result})
-                })
-                .catch((err)=> {
-                    console.log(err)
-                })
-            }
-            
-        }
-        getBookCacheAdmin()
-    }
-    else if (req.session.role=='user') 
     {
-        const getBookCacheUser = async () => {
-            const client = redis.createClient(6379)
-            await client.connect()
-            let booksCached = await client.get('books_cache_user')
-            if(booksCached) {
+        const client = redis.createClient(6379)
+        await client.connect()
+        let booksCached = await client.get('books_cache_admin')
+        if(booksCached) {
             res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
         }
         else {
-            bookSchema.find({category: 'Drama'})
+            bookSchema.find()
             .then(async(result)=> {
-                await client.set('books_cache_user', JSON.stringify(result))
-                await client.expire('books_cache_user', timeExpire)
+                await client.set('books_cache_admin', JSON.stringify(result))
+                await client.expire('books_cache_admin', timeExpire)
                 res.render('index', {title:'Home', books: result})
             })
             .catch((err)=> {
                 console.log(err)
             })
         }
-            
-        }
-        getBookCacheUser()
+    }
+    else next()
+}
+
+exports.getBookCacheUser = async (req,res,next) => {
+    if(req.session.role=='user') {
+        const client = redis.createClient(6379)
+        await client.connect()
+        let booksCached = await client.get('books_cache_user')
+        if(booksCached) {
+        res.render('index', {title: 'Home' ,books: JSON.parse(booksCached)})
     }
     else {
-        res.status(404)
+        bookSchema.find({category: 'Drama'})
+        .then(async(result)=> {
+            await client.set('books_cache_user', JSON.stringify(result))
+            await client.expire('books_cache_user', timeExpire)
+            res.render('index', {title:'Home', books: result})
+        })
+        .catch((err)=> {
+            console.log(err)
+        })
     }
+}
+else next()
+}
+
+//render database
+exports.unidentifiedUser = (req,res) => {
+    if(req.session.role != 'admin'||req.session.role != 'user')  res.status(404) 
 }
 
 //create new book in database
