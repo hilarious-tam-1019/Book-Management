@@ -53,8 +53,8 @@ else next()
 }
 
 //render database
-exports.unidentifiedUser = (req,res) => {
-    if(req.session.role != 'admin'||req.session.role != 'user')  res.status(404) 
+exports.unidentifiedUser = (err,req,res,next) => {
+    if(req.session.role != 'admin'||req.session.role != 'user'||!req.session.role)  res.status(404) 
 }
 
 //create new book in database
