@@ -101,21 +101,26 @@ const { response } = require('express');
 describe("Route ", () => {
   var server
   beforeAll(()=> {
-    sessionStub = sinon.stub(middlewares, 'redirectLogin').callsFake(function(req, res, next) {
+    sinon.stub(middlewares, 'redirectLogin').callsFake(function(req, res, next) {
       console.log('sessionStub');
       next();
     })
-    getBookCacheAdminStub = sinon.stub(books, 'getBookCacheAdmin').callsFake(function(req,res,next) {
+
+    sinon.stub(books, 'getBookCacheAdmin').callsFake(function(req,res,next) {
       if(req.session.admin) res.send('admin')
       else next()
     })
-    getBookCacheUserStub = sinon.stub(books, 'getBookCacheUser').callsFake(function(req,res,next) {
+    
+    sinon.stub(books, 'getBookCacheUser').callsFake(function(req,res,next) {
       if(req.session.user) res.send('user')
       else next()
     })
-    unidentifiedUser = sinon.stub(books, 'unidentifiedUser').callsFake(function(req,res,next) {
+    
+
+    sinon.stub(books, 'unidentifiedUser').callsFake(function(req,res,next) {
       res.send('unidentified')
     })
+    
     server = require('../../server')
   })
   afterAll(()=> {
@@ -124,12 +129,7 @@ describe("Route ", () => {
   describe('Get /', ()=> {
     beforeEach((done) => {
       try {
-        const data_file = axios.get("http://localhost:3000/home", {
-          auth: {
-            email: 'superman1011999@gmail.com',
-            password: 'funnytam1999'
-          },
-        })
+        axios.get("http://localhost:3000/home")
         .then((response)=> {
           console.log(response)
           done()
@@ -141,6 +141,7 @@ describe("Route ", () => {
       }
     });
     it('should be expected', (done)=> {
+      
       
       done()
     })
